@@ -26,11 +26,11 @@ function Header(props) {
             Гретта
             <img className="header__button-icon" src={logoutIcon} alt="Выход" />
           </button> :
-          <button className="header__button">
+          <button className="header__button" onClick={props.onLogin}>
             Авторизоваться
           </button>
         }
-        <button className="header__burger">
+        <button className="header__burger" onClick={props.onShowMenu}>
           <img
             className="header__burger-icon"
             src={props.isLight ? burgerIconWhite : burgerIconBlack}

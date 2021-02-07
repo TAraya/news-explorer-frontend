@@ -5,7 +5,7 @@ import Header from './Header.js';
 import NewsCardList from './NewsCardList';
 import SavedNewsHeader from './SavedNewsHeader';
 
-function SavedNews() {
+function SavedNews(props) {
   const defaultNews = [
     {
       _id: 1,
@@ -41,6 +41,8 @@ function SavedNews() {
       <Header
         loggedIn={true}
         isSavedNews={true}
+        onLogin={props.onLogin}
+        onShowMenu={props.onShowMenu}
       />
       <SavedNewsHeader />
       <NewsCardList

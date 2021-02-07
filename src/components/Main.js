@@ -6,7 +6,7 @@ import Header from './Header.js';
 import NewsCardList from './NewsCardList.js';
 import SearchForm from './SearchForm.js';
 
-function Main() {
+function Main(props) {
   const defaultNews = [
     {
       _id: 1,
@@ -37,7 +37,7 @@ function Main() {
     },
   ];
 
-  function showMore() {  
+  function showMore() { 
   };
 
   return (
@@ -46,6 +46,8 @@ function Main() {
         loggedIn={false}
         isMain={true}
         isLight={true}
+        onLogin={props.onLogin}
+        onShowMenu={props.onShowMenu}
       />
       <SearchForm />
       <NewsCardList
