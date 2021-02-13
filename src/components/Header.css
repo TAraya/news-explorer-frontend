@@ -1,0 +1,147 @@
+.header {
+  box-sizing: border-box;
+  position: relative;
+  z-index: 3;
+  border-bottom: rgba(127, 127, 127, 0.5) solid 1px;
+  padding: 0 40px;
+}
+
+.header_light {
+  color: white;
+}
+
+.header__container {
+  display: grid;
+  grid-template-columns: 1fr min-content min-content;
+  min-height: 80px;
+  max-width: 1320px;
+  box-sizing: border-box;
+  margin: 0 auto -1px auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__title {
+  margin: 0;
+  font-family: Roboto Slab;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.header__links {
+  display: flex;
+  height: 100%;
+}
+
+.header__link {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  margin: 0 16px;
+  transition: opacity .3s ease-in-out;
+}
+
+.header__link:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.header__link:visited {
+  color: inherit;
+}
+
+.header__link_current {
+  border-top: transparent 3px solid;
+  border-bottom: 3px solid;
+}
+
+.header__button {
+  display: flex;
+  margin: 0 0 0 16px;
+  box-sizing: border-box;
+  border: 1px solid;
+  border-radius: 100px;
+  background-color: transparent;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.3;
+  color: inherit;
+  padding: 8px 14px;
+  transition: opacity .3s ease-in-out;
+}
+
+.header__button:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.header__button-icon {
+  width: 24px;
+  height: 24px;
+  margin: 0 0 0 6px;
+}
+
+.header__burger {
+  display: none;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.header__burger:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.header__burger-icon {
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 1024px) {
+  .header__container {
+    min-height: 66px;
+  }
+}
+
+@media (max-width: 760px) {
+  .header__container {
+    grid-template-columns: 1fr min-content;
+  }
+
+  .header__links {
+    display: none;
+  } 
+
+  .header__button {
+    display: none;
+  }
+
+  .header__burger {
+    display: flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: 0 16px;
+  }
+
+  .header__container {
+    min-height: 56px;
+  }
+
+  .header__title {
+    font-size: 16px;
+    list-style: 1.5;
+  }
+}

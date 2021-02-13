@@ -1,0 +1,10 @@
+.main {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.main__background {
+  width: 100%;
+  object-fit: cover;
+  margin-top: -80px;
+}
