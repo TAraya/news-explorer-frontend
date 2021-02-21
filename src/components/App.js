@@ -70,8 +70,31 @@ function App() {
       await mainApi.signUpAsync({ email, password, name });
       showRegisterInfo();
     } catch(err) {
-      console.log('Ошибка при аутентификации: ' + JSON.stringify(err));
+      console.log('Ошибка при регистрации: ' + JSON.stringify(err));
       setRegisterError(err.message);
+    }
+  }
+
+  async function handleCardSaveAsync(card) {
+    try {
+      const token = localStorage.getItem(tokenStorageKey);
+      const data = { ...card };
+      data.index = undefined;
+
+      await mainApi.saveNewsAsync(data, token);
+      showRegisterInfo();
+    } catch(err) {
+      console.log('Ошибка при сохранении карточки: ' + JSON.stringify(err));
+    }
+  }
+
+  async function handleCardRemoveAsync(card) {
+    try {
+      const token = localStorage.getItem(tokenStorageKey);
+      await mainApi.removeNewsAsync(card._id, token)
+      showRegisterInfo();
+    } catch(err) {
+      console.log('Ошибка при удалении карточки: ' + JSON.stringify(err));
     }
   }
 
@@ -120,6 +143,8 @@ function App() {
               onShowMenu={showMenu}
               onLogin={showLogin}
               onLogout={handleLogout}
+              onCardSave={handleCardSaveAsync}
+              onCardRemove={handleCardRemoveAsync}
             />
           </Route>
         </Switch>

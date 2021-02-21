@@ -53,7 +53,13 @@ function NewsCardList(props) {
         <ul className="news-card-list__cards">
           {
             props.data.slice(0, showedCount).map(card => (
-              <NewsCard key={card.index} data={card} />
+              <NewsCard
+                key={card.index}
+                data={card}
+                searchInfo={props.searchInfo}
+                onSave={props.onCardSave}
+                onRemove={props.onCardRemove}
+              />
             ))
           }
         </ul>

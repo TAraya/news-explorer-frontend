@@ -30,7 +30,6 @@ function Main(props) {
       }
 
       const data = JSON.parse(storedNews);
-      console.log(data);
       if (data.length > 0) {
         setShowData(true);
         setData(data);
@@ -95,6 +94,8 @@ function Main(props) {
           data={data}
           error={loadingError}
           isLoading={isLoading}
+          onCardSave={props.onCardSave}
+          onCardRemove={props.onCardRemove}
         />
       }
       <About />

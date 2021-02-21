@@ -26,7 +26,33 @@ export class MainApi {
       this._baseUrl + '/users/me',
       this._getRequestOptions('GET', null, token));
 
-      return await this._readResponseContentAsync(response);
+    return await this._readResponseContentAsync(response);
+  }
+
+  async getSavedNewsAsync(token) {
+    const response = await fetch(
+      this._baseUrl + '/articles',
+      this._getRequestOptions('GET', null, token));
+      
+    return await this._readResponseContentAsync(response);
+  }
+
+  async saveNewsAsync(data, token) {
+    const response = await fetch(
+      this._baseUrl + '/articles',
+      this._getRequestOptions('POST', data, token));
+
+    return await this._readResponseContentAsync(response);
+  }
+
+  async removeNewsAsync(id, token) {
+    const response = await fetch(
+      this._baseUrl + '/articles/' + id,
+      this._getRequestOptions('DELETE', null, token));
+
+    if (!response.ok) {
+      throw new Error('Ошибка: ' + response.status);
+    }
   }
 
   _getRequestOptions(method, data, token) {
