@@ -5,9 +5,10 @@ import Preloader from './Preloader.js';
 
 function NewsCardList(props) {
   const expandSize = 3;
+  const dataLength = props.data?.length || 0;
 
   const [showedCount, setShowedCount] = React.useState(
-    props.expandable ? expandSize : props.data.length);
+    props.expandable ? expandSize : dataLength);
 
   function handleShowMoreClick() {
     setShowedCount(showedCount + expandSize);
@@ -77,7 +78,7 @@ function NewsCardList(props) {
         {
           props.isLoading ? renderPreloaderBlock() :
           props.error ? renderErrorBlock() :
-          props.data.length === 0 ? renderNotFoundBlock() :
+          dataLength === 0 ? renderNotFoundBlock() :
           renderDataBlock()
         }
         {renderExpandButton()}

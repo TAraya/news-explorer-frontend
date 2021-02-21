@@ -15,7 +15,7 @@ function NewsCard(props) {
 
   return (
     <li className="news-card">
-      <a className="news-card__image-container" href={props.data.link}>
+      <a className="news-card__image-container" href={props.data.link} rel="noreferrer" target="_blank">
         <img className="news-card__image" src={props.data.image} alt={props.data.title} />
       </a>
       <div className="">

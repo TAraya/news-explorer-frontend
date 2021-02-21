@@ -1,39 +1,59 @@
 import React from 'react';
-import closeIcon from '../images/close_icon.svg';
 import './LoginPopup.css';
+import Popup from './Popup.js';
 
 function LoginPopup(props) {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  function handleEmailChange(e) {
+    setEmail(e.target.value);
+  }
+
+  function handlePasswordChange(e) {
+    setPassword(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    props.onLogin({ email, password });
+  }
+
   return (
-    <section className={`login-popup${props.isOpened ? ' login-popup_opened' : ''}`}>
-      <div className="login-popup__container">
-        <form className="login-form" name={props.name} onSubmit={props.onSubmit} noValidate>
-          <h2 className="login-form__header">Вход</h2>
-          <input
-            className="login-form__input"
-            name="email"
-            type="email"
-            placeholder="Email"
-            required
-          />
-          <input
-            className="login-form__input"
-            name="password"
-            type="password"
-            placeholder="Пароль"
-            required
-          />   
-          <button className="login-form__submit" type="submit">
-            Войти
-          </button>
-          <p className="login-form__hint">
-            Ещё не зарегистрированы? <a href="/">Зарегистрироваться</a>
-          </p>
-        </form>
-        <button className="login-popup__close-button" onClick={props.onClose} type="button">
-          <img src={closeIcon} alt="Закрыть"/>
+    <Popup
+      header="Вход"
+      isOpened={props.isOpened}
+      onClose={props.onClose}
+      >
+      <form className="login-form" name="login" onSubmit={handleSubmit} noValidate>
+        <input
+          className="login-form__input"
+          name="email"
+          type="email"
+          placeholder="Email"
+          value={email}
+          required
+          onChange={handleEmailChange}
+        />
+        <input
+          className="login-form__input"
+          name="password"
+          type="password"
+          placeholder="Пароль"
+          value={password}
+          required
+          onChange={handlePasswordChange}
+        />   
+        <button className="login-form__submit" type="submit">
+          Войти
         </button>
-      </div>
-    </section>
+        <p className="login-form__hint">
+          Ещё не зарегистрированы?
+          <span onClick={props.onRegisterRedirect}>Зарегистрироваться</span>
+        </p>
+      </form>
+  </Popup>
   );
 }
 

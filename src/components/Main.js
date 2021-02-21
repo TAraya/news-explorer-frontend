@@ -77,10 +77,10 @@ function Main(props) {
   return (
     <div className="main">
       <Header
-        loggedIn={false}
-        isMain={true}
+        currentPage="main"
         isLight={true}
         onLogin={props.onLogin}
+        onLogout={props.onLogout}
         onShowMenu={props.onShowMenu}
       />
       <SearchForm

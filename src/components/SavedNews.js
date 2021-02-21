@@ -39,9 +39,9 @@ function SavedNews(props) {
   return (
     <main className="saved-news">
       <Header
-        loggedIn={true}
-        isSavedNews={true}
+        currentPage="saved-news"
         onLogin={props.onLogin}
+        onLogout={props.onLogout}
         onShowMenu={props.onShowMenu}
       />
       <SavedNewsHeader />

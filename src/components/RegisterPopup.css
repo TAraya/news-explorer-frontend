@@ -1,9 +1,9 @@
-.login-form {
+.register-form {
   display: flex;
   flex-direction: column;
 }
 
-.login-form__input {
+.register-form__input {
   border: none;
   border-bottom: 2px solid #CCCCCC;
   background-color: transparent;
@@ -12,7 +12,7 @@
   margin-top: 30px;
 }
 
-.login-form__submit {
+.register-form__submit {
   width: 100%;
   min-height: 50px;
   color: white;
@@ -27,13 +27,13 @@
   transition: opacity .3s ease-in-out;
 }
 
-.login-form__submit:hover {
+.register-form__submit:hover {
   opacity: 0.8;
   cursor: pointer;
 }
 
 @media (max-width: 540px) {
-  .login-form {
+  .register-form {
     width: 100%;
     min-width: 282px;
     max-width: 430px;
