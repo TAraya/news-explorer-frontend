@@ -64,7 +64,7 @@ function RegisterPopup(props) {
         </button>
         <p className="register-form__hint">
           или
-          <span onClick={props.onLoginRedirect}>Войти</span>
+          <span className="register-form__redirect" onClick={props.onLoginRedirect}>Войти</span>
         </p>
       </form>
   </Popup>

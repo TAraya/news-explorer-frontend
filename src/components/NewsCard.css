@@ -63,7 +63,23 @@
 }
 
 .news-card__keyword {
-  
+  position: absolute;
+  z-index: 3;
+  top: 24px;
+  left: 24px;
+  height: 40px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 8px;
+  background-color: white;
+  outline: none;
+  color: black;
+  margin: 0;
+  padding: 8px;
+  font-family: Roboto;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.7;
 }
 
 .news-card__button {
@@ -113,5 +129,10 @@
   .news-card__button {
     top: 8px;
     right: 8px;
+  }
+
+  .news-card__keyword {
+    top: 8px;
+    left: 8px;
   }
 }

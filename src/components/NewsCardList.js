@@ -4,16 +4,6 @@ import NewsCard from './NewsCard.js';
 import Preloader from './Preloader.js';
 
 function NewsCardList(props) {
-  const expandSize = 3;
-  const dataLength = props.data?.length || 0;
-
-  const [showedCount, setShowedCount] = React.useState(
-    props.expandable ? expandSize : dataLength);
-
-  function handleShowMoreClick() {
-    setShowedCount(showedCount + expandSize);
-  }
-
   function renderPreloaderBlock() {
     return (
       <>
@@ -52,9 +42,9 @@ function NewsCardList(props) {
         }
         <ul className="news-card-list__cards">
           {
-            props.data.slice(0, showedCount).map(card => (
+            props.data.slice(0, props.showedCount).map((card, index) => (
               <NewsCard
-                key={card.index}
+                key={props.searchInfo ? index : card._id}
                 data={card}
                 searchInfo={props.searchInfo}
                 onSave={props.onCardSave}
@@ -69,10 +59,10 @@ function NewsCardList(props) {
 
   function renderExpandButton() {
     return (
-      props.expandable && (showedCount < props.data.length) &&
+      props.expandable && (props.showedCount < props.data.length) &&
       <button
         className="news-card-list__show-button"
-        onClick={handleShowMoreClick}>
+        onClick={props.onShowMore}>
         Показать еще
       </button>
     )
@@ -84,7 +74,7 @@ function NewsCardList(props) {
         {
           props.isLoading ? renderPreloaderBlock() :
           props.error ? renderErrorBlock() :
-          dataLength === 0 ? renderNotFoundBlock() :
+          props.data.length === 0 ? renderNotFoundBlock() :
           renderDataBlock()
         }
         {renderExpandButton()}

@@ -47,7 +47,7 @@ export class NewsApi {
       throw new Error(data.message);
     }
 
-    return data.articles.map((article, index) => {
+    return data.articles.map((article) => {
       return {
         title: article.title,
         date: article.publishedAt,
@@ -56,7 +56,6 @@ export class NewsApi {
         image: article.urlToImage,
         source: article.source.name,
         keyword: query,
-        index,
       };
     });
   }

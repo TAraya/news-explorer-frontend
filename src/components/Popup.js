@@ -20,7 +20,7 @@ function Popup(props) {
         document.removeEventListener('keydown', handleKeydown);
       }
     };
-  }, [props.isOpened]);
+  }, [props]);
 
   function handleOverlayClick(evt) {
     if (evt.target.classList.contains('popup')) {

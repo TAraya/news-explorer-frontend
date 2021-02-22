@@ -32,6 +32,10 @@
   cursor: pointer;
 }
 
+.login-form__redirect {
+  color: #2F71E5;
+}
+
 @media (max-width: 540px) {
   .login-form {
     width: 100%;
