@@ -2,8 +2,11 @@ import React from 'react';
 import './NewsCardList.css';
 import NewsCard from './NewsCard.js';
 import Preloader from './Preloader.js';
+import CurrentUserContext from '../contexts/CurrentUserContext.js';
 
 function NewsCardList(props) {
+  const currentUser = React.useContext(CurrentUserContext);
+
   function renderPreloaderBlock() {
     return (
       <>
@@ -47,6 +50,8 @@ function NewsCardList(props) {
                 key={props.searchInfo ? index : card._id}
                 data={card}
                 searchInfo={props.searchInfo}
+                canSave={currentUser.isAuthorized}
+                onLoginRedirect={props.onLoginRedirect}
                 onSave={props.onCardSave}
                 onRemove={props.onCardRemove}
               />
@@ -59,7 +64,7 @@ function NewsCardList(props) {
 
   function renderExpandButton() {
     return (
-      props.expandable && (props.showedCount < props.data.length) &&
+      props.expandable && (props.showedCount < props.data.length) && !props.isLoading &&
       <button
         className="news-card-list__show-button"
         onClick={props.onShowMore}>

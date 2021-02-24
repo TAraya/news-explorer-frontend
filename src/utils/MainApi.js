@@ -10,6 +10,10 @@ export class MainApi {
       this._baseUrl + '/signin',
       this._getRequestOptions('POST', data));
 
+    if (response.status == 401) {
+      throw new Error('Некорректные имя пользователя или пароль');
+    }
+
     return await this._readResponseContentAsync(response);
   }
 
@@ -17,6 +21,10 @@ export class MainApi {
     const response = await fetch(
       this._baseUrl + '/signup',
       this._getRequestOptions('POST', data));
+
+    if (response.status == 409) {
+      throw new Error('Такой пользователь уже есть');
+    }
 
     return await this._readResponseContentAsync(response);
   }
@@ -51,7 +59,7 @@ export class MainApi {
       this._getRequestOptions('DELETE', null, token));
 
     if (!response.ok) {
-      throw new Error('Ошибка: ' + response.status);
+      throw new Error(response.statusText);
     }
   }
 
@@ -75,8 +83,9 @@ export class MainApi {
   }
 
   async _readResponseContentAsync(response) {
+    console.log(response);
     if (!response.ok) {
-      throw new Error('Ошибка: ' + response.status);
+      throw new Error(response.statusText);
     }
 
     return await response.json();

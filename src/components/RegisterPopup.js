@@ -1,70 +1,112 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './RegisterPopup.css';
 import Popup from './Popup.js';
 
 function RegisterPopup(props) {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [name, setName] = React.useState('');
+  const [values, setValues] = React.useState({});
+  const [errors, setErrors] = React.useState({});
+  const [isValid, setIsValid] = React.useState(false);
 
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
+  function handleChange(event) {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+    setValues({...values, [name]: value});
+    setErrors({...errors, [name]: target.validationMessage });
+    setIsValid(target.closest("form").checkValidity());
+  };
 
-  function handlePasswordChange(e) {
-    setPassword(e.target.value);
-  }
-
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
+  const resetForm = useCallback(
+    (newValues = {}, newErrors = {}, newIsValid = false) => {
+      setValues(newValues);
+      setErrors(newErrors);
+      setIsValid(newIsValid);
+    },
+    [setValues, setErrors, setIsValid]
+  );
 
   function handleSubmit(e) {
     e.preventDefault();
+    props.onRegister(values);
+  }
 
-    props.onRegister({ email, password, name });
+  function handleClose() {
+    resetForm({});
+    props.onClose();
+  }
+
+  function handleLoginRedirect() {
+    resetForm({});
+    props.onLoginRedirect();
   }
 
   return (
-    <Popup
-      header="Регистрация"
-      isOpened={props.isOpened}
-      onClose={props.onClose}
-      >
-      <form className="register-form" name={props.name} onSubmit={handleSubmit} noValidate>
+    <Popup isOpened={props.isOpened} onClose={handleClose}>
+      <form className="register-popup__form" name="register" onSubmit={handleSubmit} noValidate>
+        <h2 className="register-popup__header">
+          Регистрация
+        </h2>
+        <p className="register-popup__input-title">
+          Email
+        </p>
         <input
-          className="register-form__input"
+          className="register-popup__input"
           name="email"
           type="email"
-          placeholder="Email"
-          value={email}
+          placeholder="Введите почту"
+          value={values['email'] || ''}
           required
-          onChange={handleEmailChange}
+          onChange={handleChange}
         />
+        <p className="register-popup__input-error">
+          {errors['email']}
+        </p>
+        <p className="register-popup__input-title">
+          Пароль
+        </p>
         <input
-          className="register-form__input"
+          className="register-popup__input"
           name="password"
           type="password"
-          placeholder="Пароль"
-          value={password}
+          placeholder="Введите пароль"
+          value={values['password'] || ''}
           required
-          onChange={handlePasswordChange}
+          minLength="6"
+          onChange={handleChange}
         />
+        <p className="register-popup__input-error">
+          {errors['password']}
+        </p>
+        <p className="register-popup__input-title">
+          Имя
+        </p>
         <input
-          className="register-form__input"
+          className="register-popup__input"
           name="name"
           type="text"
           placeholder="Введите свое имя"
-          value={name}
+          value={values['name'] || ''}
           required
-          onChange={handleNameChange}
-        />   
-        <button className="register-form__submit" type="submit">
+          minLength="2"
+          maxLength="30"
+          onChange={handleChange}
+        />
+        <p className="register-popup__input-error">
+          {errors['name']}
+        </p>
+        <p className="register-popup__error">
+          {props.error}
+        </p>
+        <button
+          className={`register-popup__submit${isValid ? '' : ' register-popup__submit_inactive'}`}
+          type="submit">
           Зарегистрироваться
         </button>
-        <p className="register-form__hint">
+        <p className="register-popup__hint">
           или
-          <span className="register-form__redirect" onClick={props.onLoginRedirect}>Войти</span>
+          <span className="register-popup__link" onClick={handleLoginRedirect}>
+            Войти
+          </span>
         </p>
       </form>
   </Popup>

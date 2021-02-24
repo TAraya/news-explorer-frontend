@@ -12,7 +12,7 @@ export class NewsApi {
       this._baseUrl + '/everything?' + this._buildSearchString(params));
 
     if (!response.ok) {
-      throw new Error('Ошибка: ' + response.status);
+      throw new Error(response.status);
     }
 
     const data = await response.json();
@@ -44,7 +44,10 @@ export class NewsApi {
 
   _mapResult(query, data) {
     if (data.status !== 'ok') {
-      throw new Error(data.message);
+      throw new Error(
+        'Во время запроса произошла ошибка. ' +
+        'Возможно, проблема с соединением или сервер недоступен. ' +
+        'Подождите немного и попробуйте ещё раз');
     }
 
     return data.articles.map((article) => {

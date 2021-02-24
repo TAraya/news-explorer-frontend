@@ -1,19 +1,18 @@
 import React from 'react';
-import './RegisterPopup.css';
+import './RegisterInfoPopup.css';
 import Popup from './Popup.js';
 
-function RegisterPopup(props) {
+function RegisterInfoPopup(props) {
   return (
-    <Popup
-      header="Пользователь успешно зарегистрирован!"
-      isOpened={props.isOpened}
-      onClose={props.onClose}
-      >
-      <p className="register-form__hint">
-        <span onClick={props.onLoginRedirect}>Войти</span>
+    <Popup isOpened={props.isOpened} onClose={props.onClose}>
+      <h2 className="register-info-popup__header">
+        Пользователь успешно зарегистрирован!
+      </h2>
+      <p className="register-info-popup__link" onClick={props.onLoginRedirect}>
+        Войти
       </p>
-  </Popup>
+    </Popup>
   );
 }
 
-export default RegisterPopup;
+export default RegisterInfoPopup;

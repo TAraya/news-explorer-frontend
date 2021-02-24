@@ -34,10 +34,9 @@ function Popup(props) {
       onClick={handleOverlayClick}
       >
       <div className="popup__container">
-        <h2 className="popup__header">{props.header}</h2>
         {props.children}
         <button className="popup__close-button" onClick={props.onClose} type="button">
-          <img src={closeIcon} alt="Закрыть"/>
+          <img className="popup__close-image" src={closeIcon} alt="Закрыть"/>
         </button>
       </div>
     </section>

@@ -7,33 +7,54 @@ import CurrentUserContext from '../contexts/CurrentUserContext.js';
 function Navigation(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
+  function handleOverlayClick(evt) {
+    if (evt.target.classList.contains('navigation')) {
+      props.onClose();
+    }
+  };
+
+  function renderLoginButton() {
+    return (
+      currentUser.isAuthorized
+      ? <button className="navigation__button" onClick={props.onLogout}>
+          <span className="navigation__button-text">{currentUser.name}</span>
+          <img className="navigation__button-icon" src={logoutIcon} alt="Выход" />
+        </button>
+      : <button className="navigation__button" onClick={props.onLogin}>
+          <span className="navigation__button-text">Авторизоваться</span>
+        </button>
+    );
+  }
+
   return (
-    <section className={`navigation${props.isOpened ? ' navigation_opened' : ''}`}>
+    <section
+      className={`navigation${props.isOpened ? ' navigation_opened' : ''}`}
+      onClick={handleOverlayClick}
+      >
       <div className="navigation__container">
-        <h2 className="navigation__title">NewsExplorer</h2>
+        <h2 className="navigation__title">
+          NewsExplorer
+        </h2>
         <button className="navigation__close-button" onClick={props.onClose}>
-            <img className="navigation__close-icon" src={closeIcon} alt="Закрыть" />
+          <img className="navigation__close-icon" src={closeIcon} alt="Закрыть" />
         </button>
         <div className="navigation__links">
-          <a className="navigation__link" href="/">
+          <a
+            className={`navigation__link${props.currentPage === 'main' ? ' navigation__link_current' : ''}`}
+            tabIndex={props.currentPage === 'main' ? '-1' : '0'}
+            href="/">
             Главная
           </a>
           {
             currentUser.isAuthorized &&
-            <a className="navigation__link" href="/saved-news">
+            <a
+              className={`navigation__link${props.currentPage === 'saved-news' ? ' navigation__link_current' : ''}`}
+              tabIndex={props.currentPage === 'saved-news' ? '-1' : '0'}
+              href="/saved-news">
               Сохраненные статьи
             </a>
           }
-          {
-            currentUser.isAuthorized ?
-            <button className="navigation__button" onClick={props.onLogout}>
-              {currentUser.name}
-              <img className="navigation__button-icon" src={logoutIcon} alt="Выход" />
-            </button> :
-            <button className="navigation__button" onClick={props.onLogin}>
-              Авторизоваться
-            </button>
-          }
+          { renderLoginButton() }
         </div>
       </div>     
     </section>

@@ -1,45 +1,110 @@
-.login-form {
+.login-popup__header {
+  color: #1A1B22;
+  font-family: Roboto;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.17;
+  margin: 0 0 8px 0;
+  padding: 0; 
+}
+
+.login-popup__form {
+  font-family: Inter;
   display: flex;
   flex-direction: column;
 }
 
-.login-form__input {
+.login-popup__input {
   border: none;
-  border-bottom: 2px solid #CCCCCC;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
   background-color: transparent;
+  outline: none;
   font-size: 14px;
   line-height: 1.2;
-  margin-top: 30px;
+  margin: 0;
+  padding: 9px 0;
 }
 
-.login-form__submit {
+.login-popup__input:-webkit-autofill {
+  box-shadow: inset 0 0 0 50px white !important;
+  -webkit-box-shadow: inset 0 0 0 50px white !important;
+}
+
+.login-popup__input-title {
+  color: #2F71E5;
+  font-size: 12px;
+  line-height: 1.25;
+  margin: 14px 0 0 0;
+  padding: 0;
+}
+
+.login-popup__input-error {
+  min-height: 14px;
+  color: red;
+  font-size: 12px;
+  line-height: 1.25;
+  margin: 3px 0 0 0;
+  padding: 0;
+}
+
+.login-popup__error {
+  min-height: 14px;
+  color: red;
+  font-size: 12px;
+  line-height: 1.25;
+  margin: 0 auto 8px auto;
+  padding: 0;
+}
+
+.login-popup__submit {
   width: 100%;
-  min-height: 50px;
   color: white;
   background-color: #2F71E5;
   box-sizing: border-box;
   border: none;
   border-radius: 100px;
-  outline: none;
+  font-family: Roboto;
+  font-weight: 500;
   font-size: 18px;
-  line-height: 1.2;
+  line-height: 1.33;
   text-align: center;
-  transition: opacity .3s ease-in-out;
+  transition: background-color .1s ease-in-out;
+  padding: 20px;
 }
 
-.login-form__submit:hover {
-  opacity: 0.8;
+.login-popup__submit:hover {
+  background-color: #347EFF;
   cursor: pointer;
 }
 
-.login-form__redirect {
-  color: #2F71E5;
+.login-popup__submit:active {
+  background-color: #2A65CC;
+  cursor: pointer;
 }
 
-@media (max-width: 540px) {
-  .login-form {
-    width: 100%;
-    min-width: 282px;
-    max-width: 430px;
-  }
+.login-popup__submit:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0,0,0,0.7);
+}
+
+.login-popup__submit_inactive {
+  background-color: #E6E8EB;
+  color: #B6BCBF;
+  pointer-events: none;
+}
+
+.login-popup__hint {
+  font-size: 14px;
+  line-height: 1.2;
+  margin: 16px auto -6px auto;
+}
+
+.login-popup__link {
+  color: #2F71E5;
+  padding-left: 4px;
+}
+
+.login-popup__link:hover {
+  text-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+  cursor: pointer;
 }

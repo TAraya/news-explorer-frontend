@@ -1,0 +1,22 @@
+.register-info-popup__header {
+  font-family: Roboto;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.17;
+  margin: 7px 0;
+  padding: 0; 
+}
+
+.register-info-popup__link {
+  color: #2F71E5;
+  font-family: Inter;
+  font-size: 18px;
+  line-height: 1.2;
+  margin: 14px 0;
+  padding: 0;
+}
+
+.register-info-popup__link:hover {
+  text-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+  cursor: pointer;
+}

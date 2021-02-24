@@ -3,7 +3,6 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import './App.css';
 import LoginPopup from "./LoginPopup";
 import Main from './Main.js';
-import Navigation from './Navigation.js';
 import ProtectedRoute from './ProtectedRoute.js';
 import RegisterPopup from './RegisterPopup.js';
 import RegisterInfoPopup from './RegisterInfoPopup.js';
@@ -18,11 +17,7 @@ function App() {
   const tokenStorageKey = 'news-token';
   const newsStorageKey = 'last-news';
 
-  const loadingErrorText = 'Во время запроса произошла ошибка. ' +
-  'Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';
-
   const [currentUser, setCurrentUser] = React.useState({});
-  const [burgerOpened, setBurgerOpened] = React.useState(false);
 
   const [news, setNews] = React.useState([]);
   const [savedNews, setSavedNews] = React.useState([]);
@@ -116,8 +111,7 @@ function App() {
       setLoadingError(null);
     } catch (err) {
       console.log('Ошибка при поиске новостей:', err);
-      setLoadingError(loadingErrorText);
-      console.log(err);
+      setLoadingError(err.message);
     } finally {
       setIsLoading(false);
     }
@@ -140,8 +134,16 @@ function App() {
 
   function handleLogout() {
     if (currentUser.isAuthorized) {
-      setCurrentUser({})
+      const actualNews = news.map(item => {
+        return { ...item, _id: undefined }
+      });
+
+      setCurrentUser({});
+      setNews(actualNews);
+
       localStorage.removeItem(tokenStorageKey);
+      localStorage.setItem(newsStorageKey, JSON.stringify(actualNews));
+
       history.push('/');
     }
   }
@@ -189,21 +191,15 @@ function App() {
     }
   }
 
-  function showMenu() {
-    setBurgerOpened(true);
-  };
-
-  function closeMenu() {
-    setBurgerOpened(false);
-  }
-
   function showLogin() {
     closeAllPopups();
+    setLoginError('');
     setLoginOpened(true);
   };
 
   function showRegister() {
     closeAllPopups();
+    setRegisterError('');
     setRegisterOpened(true);
   }
 
@@ -229,7 +225,6 @@ function App() {
           <ProtectedRoute path="/saved-news" redirect="/" canAccess={currentUser}>
             <SavedNews
               news={savedNews}
-              onShowMenu={showMenu}
               onLogin={showLogin}
               onLogout={handleLogout}
               onCardRemove={handleCardRemoveAsync}
@@ -242,7 +237,6 @@ function App() {
               showNews={showNews}
               isLoading={isLoading}
               loadingError={loadingError}
-              onShowMenu={showMenu}
               onQuery={handleQueryAsync}
               onLogin={showLogin}
               onLogout={handleLogout}
@@ -252,12 +246,6 @@ function App() {
             />
           </Route>
         </Switch>
-        <Navigation
-          isOpened={burgerOpened}
-          onLogin={showLogin}
-          onLogout={handleLogout}
-          onClose={closeMenu}
-        />
         <LoginPopup
           isOpened={loginOpened}
           error={loginError}

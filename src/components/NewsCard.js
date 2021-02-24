@@ -1,10 +1,14 @@
 import React from 'react';
 import './NewsCard.css';
 import bookmarkIcon from '../images/bookmark_icon.svg';
+import bookmarkIconActive from '../images/bookmark_icon_active.svg';
 import bookmarkIconFilled from '../images/bookmark_icon_filled.svg';
 import removeIcon from '../images/remove_icon.svg';
+import removeIconActive from '../images/remove_icon_active.svg';
 
 function NewsCard(props) {
+  const [isActMouseHover, setIsActMouseHover] = React.useState(false);
+
   function getReadableDate(dateIsoString) {
     const date = new Date(dateIsoString);
     const tokens = date.toLocaleDateString('ru-RU', {
@@ -16,46 +20,71 @@ function NewsCard(props) {
     return `${tokens[0]} ${tokens[1]}, ${tokens[2]}`;
   }
   
-  function handleSave() {
-    props.onSave(props.data);
+  function getActIcon() {
+    if (!props.searchInfo) {
+      return isActMouseHover ? removeIconActive : removeIcon;
+    }
+
+    if (props.data._id) {
+      return bookmarkIconFilled;
+    }
+
+    return (isActMouseHover && props.canSave) ? bookmarkIconActive : bookmarkIcon;
   }
 
-  function handleRemove() {
-    props.onRemove(props.data);
+  function getHint() {
+    if (!props.canSave) {
+      return 'Войдите, чтобы сохранять статьи';
+    }
+
+    return props.data._id ? 'Убрать из сохраненных' : 'Сохранить';
   }
 
-  function renderActButton() {
-    return (
-      props.data._id
-      ? <button className="news-card__button" onClick={handleRemove}>
-          {
-            !props.searchInfo
-            ? <img src={removeIcon} alt="Удалить из закладок"/>
-            : <img src={bookmarkIconFilled} alt="Удалить из закладок"/>
-          }
-        </button>
-      : <button className="news-card__button" onClick={handleSave}>
-          <img src={bookmarkIcon} alt="Сохранить в закладки"/>
-        </button>
-    );
+  function handleActClick() {
+    if (props.data._id) {
+      props.onRemove(props.data);
+    } else {
+      props.canSave ? props.onSave(props.data) : props.onLoginRedirect();
+    }
+  }
+
+  function handleMouseEnter() {
+    setIsActMouseHover(true);
+  }
+
+  function handleMouseLeave() {
+    setIsActMouseHover(false);
   }
 
   return (
     <li className="news-card">
-      {
-        !props.searchInfo &&
-        <p className="news-card__keyword">{props.data.keyword}</p>
-      }
-      { renderActButton() }
-      <a className="news-card__image-container" href={props.data.link} rel="noreferrer" target="_blank">
-        <img className="news-card__image" src={props.data.image} alt={props.data.title} />
+      <button
+        className="news-card__button"
+        onClick={handleActClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        >
+        <img src={getActIcon()} alt="Закладка"/>
+      </button>
+      <a className="news-card__link" href={props.data.link} rel="noreferrer" target="_blank">
+        {
+          !props.searchInfo &&
+          <p className="news-card__keyword">{props.data.keyword}</p>
+        }
+        {
+          isActMouseHover &&
+          <p className="news-card__hint">{getHint()}</p>
+        }
+        <div className="news-card__image-container">
+          <img className="news-card__image" src={props.data.image} alt={props.data.title} />
+        </div>
+        <div className="">
+          <p className="news-card__date">{getReadableDate(props.data.date)}</p>
+          <h3 className="news-card__title">{props.data.title}</h3>
+          <p className="news-card__text">{props.data.text}</p>
+        </div>
+        <p className="news-card__source">{props.data.source}</p>
       </a>
-      <div className="">
-        <p className="news-card__date">{getReadableDate(props.data.date)}</p>
-        <h3 className="news-card__title">{props.data.title}</h3>
-        <p className="news-card__text">{props.data.text}</p>
-      </div>
-      <p className="news-card__source">{props.data.source}</p>
     </li>
   );
 }

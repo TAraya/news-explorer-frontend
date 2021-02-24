@@ -9,35 +9,47 @@ import CurrentUserContext from '../contexts/CurrentUserContext.js';
 function Header(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
+  function renderLoginButton() {
+    return (
+      currentUser.isAuthorized
+      ? <button className="header__button" onClick={props.onLogout}>
+          <span className="header__button-text">
+            {currentUser.name}
+          </span>
+          <img
+            className="header__button-icon"
+            src={props.isLight ? logoutIconWhite : logoutIconBlack}
+            alt="Выход"
+          />
+        </button>
+      : <button className="header__button" onClick={props.onLogin}>
+          <span className="header__button-text">Авторизоваться</span>
+        </button>
+    );
+  }
+
   return (
     <header className={`header${props.isLight ? ' header_light' : ''}`}>
       <div className="header__container">
-        <h1 className="header__title">NewsExplorer</h1>
-        <div className="header__links">
-          <a className={`header__link${props.currentPage === 'main' ? ' header__link_current' : ''}`} href="/">
-            Главная
-          </a>
-          {
-            currentUser.isAuthorized &&
-            <a className={`header__link${props.currentPage === 'saved-news' ? ' header__link_current' : ''}`} href="/saved-news">
-              Сохраненные статьи
-            </a>
-          }
-        </div>
+        <h1 className="header__title">
+          NewsExplorer
+        </h1>
+        <a
+          className={`header__link${props.currentPage === 'main' ? ' header__link_current' : ''}`}
+          tabIndex={props.currentPage === 'main' ? '-1' : '0'}
+          href="/">
+          Главная
+        </a>
         {
-          currentUser.isAuthorized ?
-          <button className="header__button" onClick={props.onLogout}>
-            {currentUser.name}
-            <img
-              className="header__button-icon"
-              src={props.isLight ? logoutIconWhite : logoutIconBlack}
-              alt="Выход"
-            />
-          </button> :
-          <button className="header__button" onClick={props.onLogin}>
-            Авторизоваться
-          </button>
+          currentUser.isAuthorized &&
+          <a
+            className={`header__link${props.currentPage === 'saved-news' ? ' header__link_current' : ''}`}
+            tabIndex={props.currentPage === 'saved-news' ? '-1' : '0'}
+            href="/saved-news">
+            Сохраненные статьи
+          </a>
         }
+        { renderLoginButton() }
         <button className="header__burger" onClick={props.onShowMenu}>
           <img
             className="header__burger-icon"
