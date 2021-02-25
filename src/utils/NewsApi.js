@@ -1,4 +1,4 @@
-export const newsApiUrl = 'https://newsapi.org/v2';
+export const newsApiUrl = 'https://nomoreparties.co/news/v2';
 export const newsApiKey = 'b9152e313bfc4159989e019ba0820d61';
 
 export class NewsApi {

@@ -1,4 +1,4 @@
-export const mainApiUrl = 'http://localhost:3001';
+export const mainApiUrl = 'https://api.nexplorer.students.nomoreparties.space';
 
 export class MainApi {
   constructor(options) {
