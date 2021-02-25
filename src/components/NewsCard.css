@@ -160,4 +160,9 @@
     top: 8px;
     left: 8px;
   }
+
+  .news-card__hint {
+    top: 8px;
+    right: 56px;
+  }
 }
