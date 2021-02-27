@@ -44,6 +44,11 @@
   padding: 10px 50px 10px 20px;
 }
 
+.search-form__input:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0,0,0,0.7);
+}
+
 .search-form__submit {
   min-height: 64px;
   color: white;
@@ -56,6 +61,11 @@
   line-height: 1.3;
   text-align: center;
   transition: opacity .3s ease-in-out;
+}
+
+.search-form__submit:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0,0,0,0.7);
 }
 
 .search-form__submit:hover {

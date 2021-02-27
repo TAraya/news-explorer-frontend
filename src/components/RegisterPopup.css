@@ -1,4 +1,4 @@
-.login-popup__header {
+.register-popup__header {
   color: #1A1B22;
   font-family: Roboto;
   font-weight: 900;
@@ -7,14 +7,14 @@
   margin: 0 0 8px 0;
   padding: 0; 
 }
-
-.login-popup__form {
+  
+.register-popup__form {
   font-family: Inter;
   display: flex;
   flex-direction: column;
 }
-
-.login-popup__input {
+  
+.register-popup__input {
   border: none;
   border-bottom: 1px solid rgba(0,0,0,0.2);
   background-color: transparent;
@@ -24,21 +24,21 @@
   margin: 0;
   padding: 9px 0;
 }
-
-.login-popup__input:-webkit-autofill {
+  
+.register-popup__input:-webkit-autofill {
   box-shadow: inset 0 0 0 50px white !important;
   -webkit-box-shadow: inset 0 0 0 50px white !important;
 }
-
-.login-popup__input-title {
+  
+.register-popup__input-title {
   color: #2F71E5;
   font-size: 12px;
   line-height: 1.25;
   margin: 14px 0 0 0;
   padding: 0;
 }
-
-.login-popup__input-error {
+  
+.register-popup__input-error {
   min-height: 14px;
   color: red;
   font-size: 12px;
@@ -46,8 +46,8 @@
   margin: 3px 0 0 0;
   padding: 0;
 }
-
-.login-popup__error {
+  
+.register-popup__error {
   min-height: 14px;
   color: red;
   font-size: 12px;
@@ -55,8 +55,8 @@
   margin: 0 auto 8px auto;
   padding: 0;
 }
-
-.login-popup__submit {
+  
+.register-popup__submit {
   width: 100%;
   color: white;
   background-color: #2F71E5;
@@ -71,40 +71,41 @@
   transition: background-color .1s ease-in-out;
   padding: 20px;
 }
-
-.login-popup__submit:hover {
+  
+.register-popup__submit:hover {
   background-color: #347EFF;
   cursor: pointer;
 }
-
-.login-popup__submit:active {
+  
+.register-popup__submit:active {
   background-color: #2A65CC;
   cursor: pointer;
 }
-
-.login-popup__submit:focus {
+  
+.register-popup__submit:focus {
   outline: none;
   box-shadow: 0 0 10px rgba(0,0,0,0.7);
 }
-
-.login-popup__submit_inactive {
+  
+.register-popup__submit_inactive {
   background-color: #E6E8EB;
   color: #B6BCBF;
   pointer-events: none;
 }
-
-.login-popup__hint {
+  
+.register-popup__hint {
   font-size: 14px;
   line-height: 1.2;
   margin: 16px auto -6px auto;
 }
-
-.login-popup__link {
+  
+.register-popup__link {
   color: #2F71E5;
   padding-left: 4px;
 }
-
-.login-popup__link:hover {
+  
+.register-popup__link:hover {
   text-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
   cursor: pointer;
 }
+  

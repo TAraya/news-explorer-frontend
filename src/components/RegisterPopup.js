@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
-import './LoginPopup.css';
+import './RegisterPopup.css';
 import Popup from './Popup.js';
 
-function LoginPopup(props) {
+function RegisterPopup(props) {
   const [values, setValues] = React.useState({});
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
@@ -27,7 +27,7 @@ function LoginPopup(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.onLogin(values);
+    props.onRegister(values);
   }
 
   function handleClose() {
@@ -35,22 +35,22 @@ function LoginPopup(props) {
     props.onClose();
   }
 
-  function handleRegisterRedirect() {
+  function handleLoginRedirect() {
     resetForm({});
-    props.onRegisterRedirect();
+    props.onLoginRedirect();
   }
 
   return (
     <Popup isOpened={props.isOpened} onClose={handleClose}>
-      <form className="login-popup__form" name="login" onSubmit={handleSubmit} noValidate>
-        <h2 className="login-popup__header">
-          Вход
+      <form className="register-popup__form" name="register" onSubmit={handleSubmit} noValidate>
+        <h2 className="register-popup__header">
+          Регистрация
         </h2>
-        <p className="login-popup__input-title">
+        <p className="register-popup__input-title">
           Email
         </p>
         <input
-          className="login-popup__input"
+          className="register-popup__input"
           name="email"
           type="email"
           placeholder="Введите почту"
@@ -58,14 +58,14 @@ function LoginPopup(props) {
           required
           onChange={handleChange}
         />
-        <p className="login-popup__input-error">
+        <p className="register-popup__input-error">
           {errors['email']}
         </p>
-        <p className="login-popup__input-title">
+        <p className="register-popup__input-title">
           Пароль
         </p>
         <input
-          className="login-popup__input"
+          className="register-popup__input"
           name="password"
           type="password"
           placeholder="Введите пароль"
@@ -74,21 +74,38 @@ function LoginPopup(props) {
           minLength="6"
           onChange={handleChange}
         />
-        <p className="login-popup__input-error">
+        <p className="register-popup__input-error">
           {errors['password']}
         </p>
-        <p className="login-popup__error">
+        <p className="register-popup__input-title">
+          Имя
+        </p>
+        <input
+          className="register-popup__input"
+          name="name"
+          type="text"
+          placeholder="Введите свое имя"
+          value={values['name'] || ''}
+          required
+          minLength="2"
+          maxLength="30"
+          onChange={handleChange}
+        />
+        <p className="register-popup__input-error">
+          {errors['name']}
+        </p>
+        <p className="register-popup__error">
           {props.error}
         </p>
         <button
-          className={`login-popup__submit${isValid ? '' : ' login-popup__submit_inactive'}`}
+          className={`register-popup__submit${isValid ? '' : ' register-popup__submit_inactive'}`}
           type="submit">
-          Войти
+          Зарегистрироваться
         </button>
-        <p className="login-popup__hint">
+        <p className="register-popup__hint">
           или
-          <span className="login-popup__link" onClick={handleRegisterRedirect}>
-            Зарегистрироваться
+          <span className="register-popup__link" onClick={handleLoginRedirect}>
+            Войти
           </span>
         </p>
       </form>
@@ -96,4 +113,4 @@ function LoginPopup(props) {
   );
 }
 
-export default LoginPopup;
+export default RegisterPopup;
