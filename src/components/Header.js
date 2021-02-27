@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import burgerIconBlack from '../images/burger_icon_black.svg';
 import burgerIconWhite from '../images/burger_icon_white.svg';
 import logoutIconBlack from '../images/logout_icon_black.svg';
@@ -34,20 +35,20 @@ function Header(props) {
         <h1 className="header__title">
           NewsExplorer
         </h1>
-        <a
+        <Link
           className={`header__link${props.currentPage === 'main' ? ' header__link_current' : ''}`}
           tabIndex={props.currentPage === 'main' ? '-1' : '0'}
-          href="/">
+          to="/">
           Главная
-        </a>
+        </Link>
         {
           currentUser.isAuthorized &&
-          <a
+          <Link
             className={`header__link${props.currentPage === 'saved-news' ? ' header__link_current' : ''}`}
             tabIndex={props.currentPage === 'saved-news' ? '-1' : '0'}
-            href="/saved-news">
+            to="/saved-news">
             Сохраненные статьи
-          </a>
+          </Link>
         }
         { renderLoginButton() }
         <button className="header__burger" onClick={props.onShowMenu}>

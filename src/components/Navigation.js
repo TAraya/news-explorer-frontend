@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Navigation.css';
 import closeIcon from '../images/close_icon.svg';
 import logoutIcon from '../images/logout_icon_white.svg';
@@ -39,20 +40,20 @@ function Navigation(props) {
           <img className="navigation__close-icon" src={closeIcon} alt="Закрыть" />
         </button>
         <div className="navigation__links">
-          <a
+          <Link
             className={`navigation__link${props.currentPage === 'main' ? ' navigation__link_current' : ''}`}
             tabIndex={props.currentPage === 'main' ? '-1' : '0'}
-            href="/">
+            to="/">
             Главная
-          </a>
+          </Link>
           {
             currentUser.isAuthorized &&
-            <a
+            <Link
               className={`navigation__link${props.currentPage === 'saved-news' ? ' navigation__link_current' : ''}`}
               tabIndex={props.currentPage === 'saved-news' ? '-1' : '0'}
-              href="/saved-news">
+              to="/saved-news">
               Сохраненные статьи
-            </a>
+            </Link>
           }
           { renderLoginButton() }
         </div>
