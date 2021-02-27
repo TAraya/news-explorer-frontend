@@ -31,8 +31,9 @@ function SearchForm(props) {
             name="query"
             value={query}
             onChange={handleQueryChange}
+            readOnly={props.isLocked}
           />
-          <button className="search-form__submit" type="submit">
+          <button className="search-form__submit" type="submit" disabled={props.isLocked}>
             Искать
           </button>
         </div>

@@ -8,6 +8,11 @@ import removeIconActive from '../images/remove_icon_active.svg';
 
 function NewsCard(props) {
   const [isActMouseHover, setIsActMouseHover] = React.useState(false);
+  const [isActLocked, setIsActLocked] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsActLocked(false);
+  }, [props]);
 
   function getReadableDate(dateIsoString) {
     const date = new Date(dateIsoString);
@@ -41,6 +46,9 @@ function NewsCard(props) {
   }
 
   function handleActClick() {
+    setIsActLocked(true);
+    setIsActMouseHover(false);
+
     if (props.data._id) {
       props.onRemove(props.data);
     } else {
@@ -60,6 +68,7 @@ function NewsCard(props) {
     <li className="news-card">
       <button
         className="news-card__button"
+        disabled={isActLocked}
         onClick={handleActClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

@@ -25,6 +25,11 @@ function LoginPopup(props) {
     [setValues, setErrors, setIsValid]
   );
 
+  React.useEffect(() => {
+    resetForm();
+  // eslint-disable-next-line
+  }, [props.isOpened]);
+
   function handleSubmit(e) {
     e.preventDefault();
     props.onLogin(values);
@@ -41,7 +46,7 @@ function LoginPopup(props) {
   }
 
   return (
-    <Popup isOpened={props.isOpened} onClose={handleClose}>
+    <Popup isOpened={props.isOpened} isLocked={props.isLocked} onClose={handleClose}>
       <form className="login-popup__form" name="login" onSubmit={handleSubmit} noValidate>
         <h2 className="login-popup__header">
           Вход
@@ -56,6 +61,7 @@ function LoginPopup(props) {
           placeholder="Введите почту"
           value={values['email'] || ''}
           required
+          readOnly={props.isLocked}
           onChange={handleChange}
         />
         <p className="login-popup__input-error">
@@ -71,6 +77,7 @@ function LoginPopup(props) {
           placeholder="Введите пароль"
           value={values['password'] || ''}
           required
+          readOnly={props.isLocked}
           minLength="6"
           onChange={handleChange}
         />
@@ -82,7 +89,8 @@ function LoginPopup(props) {
         </p>
         <button
           className={`login-popup__submit${isValid ? '' : ' login-popup__submit_inactive'}`}
-          type="submit">
+          type="submit"
+          disabled={props.isLocked}>
           Войти
         </button>
         <p className="login-popup__hint">

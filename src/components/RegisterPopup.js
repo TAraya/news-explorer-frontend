@@ -25,6 +25,11 @@ function RegisterPopup(props) {
     [setValues, setErrors, setIsValid]
   );
 
+  React.useEffect(() => {
+    resetForm();
+  // eslint-disable-next-line
+  }, [props.isOpened]);
+
   function handleSubmit(e) {
     e.preventDefault();
     props.onRegister(values);
@@ -41,7 +46,7 @@ function RegisterPopup(props) {
   }
 
   return (
-    <Popup isOpened={props.isOpened} onClose={handleClose}>
+    <Popup isOpened={props.isOpened} isLocked={props.isLocked} onClose={handleClose}>
       <form className="register-popup__form" name="register" onSubmit={handleSubmit} noValidate>
         <h2 className="register-popup__header">
           Регистрация
@@ -56,6 +61,7 @@ function RegisterPopup(props) {
           placeholder="Введите почту"
           value={values['email'] || ''}
           required
+          readOnly={props.isLocked}
           onChange={handleChange}
         />
         <p className="register-popup__input-error">
@@ -71,6 +77,7 @@ function RegisterPopup(props) {
           placeholder="Введите пароль"
           value={values['password'] || ''}
           required
+          readOnly={props.isLocked}
           minLength="6"
           onChange={handleChange}
         />
@@ -87,6 +94,7 @@ function RegisterPopup(props) {
           placeholder="Введите свое имя"
           value={values['name'] || ''}
           required
+          readOnly={props.isLocked}
           minLength="2"
           maxLength="30"
           onChange={handleChange}
@@ -99,7 +107,9 @@ function RegisterPopup(props) {
         </p>
         <button
           className={`register-popup__submit${isValid ? '' : ' register-popup__submit_inactive'}`}
-          type="submit">
+          type="submit"
+          disabled={props.isLocked}
+          >
           Зарегистрироваться
         </button>
         <p className="register-popup__hint">

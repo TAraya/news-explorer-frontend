@@ -13,6 +13,7 @@ import { newsApi } from '../utils/NewsApi.js'
 
 function App() {
   const expandSize = 3;
+  const searchIntervalDays = 7;
 
   const tokenStorageKey = 'news-token';
   const newsStorageKey = 'last-news';
@@ -30,9 +31,11 @@ function App() {
 
   const [loginOpened, setLoginOpened] = React.useState(false);
   const [loginError, setLoginError] = React.useState();
+  const [loginLocked, setLoginLocked] = React.useState(false);
 
   const [registerOpened, setRegisterOpened] = React.useState(false);
   const [registerError, setRegisterError] = React.useState();
+  const [registerLocked, setRegisterLocked] = React.useState(false);
   const [registerInfoOpened, setRegisterInfoOpened] = React.useState(false);
 
   React.useEffect(() => {
@@ -43,6 +46,7 @@ function App() {
     initAsync();
 
     return () => {};
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const history = useHistory();
@@ -54,12 +58,15 @@ function App() {
         return;
       }
 
+      setLoginLocked(true);
       const userData = await mainApi.getUserAsync(token);
       setCurrentUser({ ...userData.data, isAuthorized: true });
 
       await loadSavedNewsAsync();
     } catch (err) {
       console.log('Ошибка при аутентификации: ', err);
+    } finally {
+      setLoginLocked(false);
     }
   }
 
@@ -96,7 +103,7 @@ function App() {
     try {
       const now = new Date();
       const lastWeek = new Date();
-      lastWeek.setDate(now.getDate() - 7);
+      lastWeek.setDate(now.getDate() - searchIntervalDays);
       
       const data = await newsApi.getEverythingAsync({
         q: query,
@@ -119,6 +126,7 @@ function App() {
 
   async function handleLoginAsync({ email, password }) {
     try {
+      setLoginLocked(true);
       const tokenData = await mainApi.signInAsync({ email, password });
       const token = tokenData.token;
       localStorage.setItem(tokenStorageKey, token);
@@ -129,6 +137,8 @@ function App() {
     } catch (err) {
       console.log('Ошибка при аутентификации:', err);
       setLoginError(err.message);
+    } finally {
+      setLoginLocked(false);
     }
   }
 
@@ -150,19 +160,21 @@ function App() {
 
   async function handleRegisterAsync({ email, password, name }) {
     try {
+      setRegisterLocked(true);
       await mainApi.signUpAsync({ email, password, name });
       showRegisterInfo();
     } catch(err) {
       console.log('Ошибка при регистрации:', err);
       setRegisterError(err.message);
-    }
+    } finally {
+      setRegisterLocked(false);
+    }  
   }
 
   async function handleCardSaveAsync(card) {
     try {
       const token = localStorage.getItem(tokenStorageKey);
       const saveResult = await mainApi.saveNewsAsync(card, token);
-      
       const savedCard = { ...saveResult.data, owner: undefined, __v: undefined };
       const actualNews = news.map(old => (old === card) ? savedCard : old);
       const actualSavedNews = [savedCard].concat(savedNews);
@@ -179,7 +191,6 @@ function App() {
     try {
       const token = localStorage.getItem(tokenStorageKey);
       await mainApi.removeNewsAsync(card._id, token);
-
       const actualNews = news.map(old => (old === card) ? { ...old, _id: undefined } : old);
       const actualSavedNews = savedNews.filter(old => old._id !== card._id);
 
@@ -222,7 +233,7 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
         <Switch>
-          <ProtectedRoute path="/saved-news" redirect="/" canAccess={currentUser}>
+          <ProtectedRoute path="/saved-news" redirect="/" canAccess={currentUser.isAuthorized}>
             <SavedNews
               news={savedNews}
               onLogin={showLogin}
@@ -248,6 +259,7 @@ function App() {
         </Switch>
         <LoginPopup
           isOpened={loginOpened}
+          isLocked={loginLocked}
           error={loginError}
           onLogin={handleLoginAsync}
           onRegisterRedirect={showRegister}
@@ -255,6 +267,7 @@ function App() {
         />
         <RegisterPopup
           isOpened={registerOpened}
+          isLocked={registerLocked}
           error={registerError}
           onRegister={handleRegisterAsync}
           onLoginRedirect={showLogin}

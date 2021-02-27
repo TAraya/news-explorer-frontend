@@ -23,6 +23,10 @@ function Popup(props) {
   }, [props]);
 
   function handleOverlayClick(evt) {
+    if (props.isLocked) {
+      return;
+    }
+
     if (evt.target.classList.contains('popup')) {
       props.onClose();
     }
@@ -35,7 +39,7 @@ function Popup(props) {
       >
       <div className="popup__container">
         {props.children}
-        <button className="popup__close-button" onClick={props.onClose} type="button">
+        <button className="popup__close-button" onClick={props.onClose} type="button" disabled={props.isLocked}>
           <img className="popup__close-image" src={closeIcon} alt="Закрыть"/>
         </button>
       </div>

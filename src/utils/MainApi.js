@@ -10,7 +10,7 @@ export class MainApi {
       this._baseUrl + '/signin',
       this._getRequestOptions('POST', data));
 
-    if (response.status == 401) {
+    if (response.status === 401) {
       throw new Error('Некорректные имя пользователя или пароль');
     }
 
@@ -22,7 +22,7 @@ export class MainApi {
       this._baseUrl + '/signup',
       this._getRequestOptions('POST', data));
 
-    if (response.status == 409) {
+    if (response.status === 409) {
       throw new Error('Такой пользователь уже есть');
     }
 
